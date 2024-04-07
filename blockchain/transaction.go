@@ -24,6 +24,22 @@ func (bc *BlockChain) CopyTransaction() []*Transaction {
 	return transactions
 }
 
+func (bc *BlockChain) CalculateAmount(blockchainAddr string) float32 {
+	var total float32 = 0.0
+	for _, b := range bc.Chain {
+		for _, t := range b.Transactions {
+			if blockchainAddr == t.Reciver {
+				total += t.Value
+			}
+			if blockchainAddr == t.Sender {
+				total -= t.Value
+			}
+
+		}
+	}
+	return total
+}
+
 func (t *Transaction) Print() {
 	fmt.Printf("%s\n", strings.Repeat("_", 20))
 	fmt.Printf("sender %s\n", t.Sender)
