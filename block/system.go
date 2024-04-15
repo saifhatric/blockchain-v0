@@ -1,8 +1,10 @@
-package blockchain
+package block
 
 import (
 	"fmt"
 	"strings"
+
+	"github.com/saifhatric/blockchain-v1/wallet"
 )
 
 const (
@@ -32,7 +34,7 @@ func (bc *BlockChain) ProofOfWork() int {
 
 // a function that is used by the nodes to create a new block, ...and  reward the miner of that block
 func (bc *BlockChain) Mining() bool {
-	bc.AddTransactions(MINING_SENDER, bc.BlockChainAddr, MINING_REWARD)
+	bc.AddTransactions(&wallet.WTransaction{}, MINING_SENDER, bc.BlockChainAddr, MINING_REWARD)
 	prevHash := bc.LastBlock().Hash()
 	nonce := bc.ProofOfWork()
 	bc.CreateBlock(nonce, prevHash)
